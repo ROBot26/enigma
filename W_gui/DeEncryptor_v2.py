@@ -1,6 +1,7 @@
 ## De/Encryptor
 ## Rob Ponder
 ## 5 January 2017
+## 29 October 2021
 
 
 import time
@@ -52,25 +53,17 @@ def decode(msg,key1,key2):
 def create_key(word):
 ## two columns of key
     key1=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','0',',','.',' ']
-    key2=parse(word)
-    
-    err=0
-    err_f=0
-
-    for i in range(0,len(key1)):#step through adding each letter
-        for j in range(0,len(word)): #search through word for letter
-             if key1[i]==word[j]:
-                       err_f=1
-        if err_f == 1:  ##if letter shows up in word, grab letter at end of key 1 list to place in key 2
-            k=len(key1)-len(word)+err
-            key2.append(key1[k])
-            err=err+1
-        else:   ## place letter in key 2
-            key2.append(key1[i])
-        err_f=0
-
-    z=len(key1)+1
-    key2=key2[0:z]
+    key2=[]
+    for kdx,letter in enumerate(word):
+        loc=1000
+        for idx,value in enumerate(key1):
+            if value==letter:
+                loc=idx
+            if idx % (loc+1) == len(word)-kdx:
+                key2.append(value)
+                del key1[idx]
+    key2.extend(key1)
+    key1=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','0',',','.',' ']
     print('Key created')
     return(key1,key2)
 

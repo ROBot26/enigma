@@ -4,7 +4,7 @@
 
 from functools import partial
 import tkinter as tk
-from DeEncryptor import *
+from DeEncryptor_v2 import *
 import time
 
 # GUI  operation functions
